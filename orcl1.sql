@@ -1,0 +1,109 @@
+select to_char(to_date('2015.01.10.10','YYYY.MM.DD HH24')
+    +1/24/(60/10),'YYYY.MM.DD HH24:MI:SS') FROM DUAL;
+    
+SELECT LOC,
+    CASE WHEN LOC = 'NEW YORK' THEN 'EAST'
+     ELSE 'ETC'
+    END as AREA
+FROM DEPT;
+
+
+CREATE TABLE TAB1
+( COL1 VARCHAR2(10) NOT NULL
+ ,COL2 VARCHAR2(10) );
+ 
+SELECT * FROM TAB1
+
+INSERT INTO TAB1
+    VALUES ('a',NULL);
+INSERT INTO TAB1
+    VALUES ('b','');
+INSERT INTO TAB1
+    VALUES ('c',3);
+INSERT INTO TAB1
+    VALUES ('d',4);
+INSERT INTO TAB1
+    VALUES ('e',5);
+    
+SELECT COUNT(COL1) FROM TAB1 WHERE COL2=NULL;
+
+CREATE TABLE COM
+( NNAME VARCHAR2(10) NOT NULL,
+  GRADE VARCHAR2(10) );
+  
+INSERT INTO COM
+    VALUES ('김ㅇㅇ','사원');
+INSERT INTO COM
+    VALUES ('김ㄱㅇ','사원');
+INSERT INTO COM
+    VALUES ('김ㄴㅇ','사원');
+INSERT INTO COM
+    VALUES ('김ㄷㅇ','사원');
+INSERT INTO COM
+    VALUES ('김ㄹㅇ','사원');
+INSERT INTO COM
+    VALUES ('김ㅁㅇ','사원');
+INSERT INTO COM
+    VALUES ('이ㅇㅇ','대리');
+INSERT INTO COM
+    VALUES ('이ㄱㅇ','대리');
+INSERT INTO COM
+    VALUES ('이ㄴㅇ','대리');
+INSERT INTO COM
+    VALUES ('이ㄷㅇ','대리');
+INSERT INTO COM
+    VALUES ('이ㄹㅇ','대리');
+INSERT INTO COM
+    VALUES ('박ㅇㅇ','과장');
+INSERT INTO COM
+    VALUES ('박ㄱㅇ','과장');
+INSERT INTO COM
+    VALUES ('박ㄴㅇ','과장');
+INSERT INTO COM
+    VALUES ('박ㄷㅇ','과장');
+INSERT INTO COM
+    VALUES ('최ㅇㅇ','차장');
+INSERT INTO COM
+    VALUES ('최ㄱㅇ','차장');
+INSERT INTO COM
+    VALUES ('조ㅇㅇ','부장');
+INSERT INTO COM
+    VALUES ('홍ㅇㅇ',NULL);
+INSERT INTO COM
+    VALUES ('홍ㄱㅇ',NULL);
+INSERT INTO COM
+    VALUES ('홍ㄴㅇ',NULL);
+    
+SELECT * FROM COM
+
+SELECT COUNT(GRADE) FROM COM;
+
+SELECT GRADE, COUNT(*) FROM COM GROUP BY GRADE;
+
+SELECT 회원ID, SUM(주문금액) AS 합계
+FROM 주문
+GROUP BY 회원ID
+HAVING COUNT(*) > 1;
+
+SELECT SUM(주문금액) AS 합계
+FROM 주문
+HAVING AVG(주문금액) > 100;
+
+CREATE TABLE 주문
+( 회원ID VARCHAR2(10),
+  주문금액 NUMBER );
+  
+CREATE TABLE 시스템사용이력
+( 메뉴ID VARCHAR2(10),
+  사용일시 DATE,
+  사용유형코드 VARCHAR2(10) );
+  
+SELECT 메뉴ID, 사용유형코드, COUNT(*) AS CNT
+FROM 시스템사용이력
+WHERE 사용일시 BETWEEN SYSDATE-1 AND SYSDATE
+GROUP BY 메뉴ID, 사용유형코드
+HAVING 메뉴ID=3 AND 사용유형코드=100;
+
+SELECT AVG(COUNT(*)) AS AVGCNT
+FROM 시스템사용이력
+GROUP BY 메뉴ID, 사용유형코드;
